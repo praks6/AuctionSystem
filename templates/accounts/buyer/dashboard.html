@@ -1,0 +1,27 @@
+{% extends  'basic.html' %}
+{% load static %}
+{% block 'title' %} Dashboard - Student {% endblock %}
+
+
+{% block 'body' %}
+
+<div class="row">
+    {% include 'components/buyersidenav.html' %}
+    <div class="col-9 right-side">
+        {% include 'components/messages.html' %}
+        <h3>Dashboard </h3>
+        <hr>
+
+        <hr/>
+        <div class="row">
+            <h1>Hello from buyer Dashboard</h1>
+            <div class="col-4">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+

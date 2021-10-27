@@ -1,8 +1,9 @@
 {% extends  'base.html' %}
 {% load static %}
-{% block 'title' %} Signin {% endblock %}
+{% block 'title' %} Signup - Seller {% endblock %}
 
 {% block 'css' %}
+
 
 {% endblock %}
 
@@ -13,14 +14,14 @@
         <div class="col-8">
             <div class="card signup-card">
                 <div class="card-header">
-                    Sigin
+                    Signup - Seller
                 </div>
                 <div class="card-body">
                     {% include 'components/messages.html' %}
-                    <form action="{% url 'signin' %}" method="post">
+                    <form action="{% url 'signupseller' %}" method="post">
                         {{form.as_p}}
                         {% csrf_token %}
-                        <button style="float:right;" type="submit" class="btn btn-primary">Login</button>
+                        <button style="float:right;" type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>
             </div>
