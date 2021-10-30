@@ -4,5 +4,16 @@
 
 {% block 'body' %}
 {% include 'components/navbar.html' %}
+{% for p in product %}
+<p>{{p.product_name}}</p>
+<!--{% if p.remaining_time < 0 %}-->
+<p>Expired</p>
+<!--{% else %}-->
+<p>{{p.remaining_time}}</p>
+{% endif %}
 
+{% endfor %}
+
+<h2>hello</h2>
+<h2>hello</h2>
 {% endblock %}

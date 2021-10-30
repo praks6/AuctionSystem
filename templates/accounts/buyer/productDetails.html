@@ -6,7 +6,7 @@
 {% block 'body' %}
 
 <div class="row">
-    {% include 'components/sellersidenav.html' %}
+    {% include 'components/buyersidenav.html' %}
     <div class="col-10 right-side">
         {% include 'components/messages.html' %}
         <h3>Dashboard </h3>
@@ -24,8 +24,15 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">{{p.product_name}}</h5>
-                    <p class="card-text">{{p.description|truncatewords:10}}</p>
-                    <a href="{% url 'productDetails' p.id %}" class="btn btn-primary">View Details</a>
+                    <p class="card-text">{{p.description}}</p>
+                    {% if request.user.isBuyer %}
+                    <form action="" enctype="multipart/form-data" method="POST">
+                        <input type="hidden" value="{{p.id}}" name="pid">
+                        {{form.as_p}}
+                        {% csrf_token %}
+                        <button style="float:right;" type="submit" class="btn btn-success">Save</button>
+                    </form>
+                    {% endif %}
                 </div>
             </div>
         </div>

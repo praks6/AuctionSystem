@@ -1,4 +1,6 @@
 from django import forms
+
+from home.models import Product,Bidders
 from .models import User
 from django.contrib.auth.hashers import check_password, make_password
 from django.utils import timezone
@@ -39,3 +41,18 @@ class UserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+#####################
+class createProduct(forms.ModelForm):
+    # subject = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Python Django'}))
+    # description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control',}))
+    class Meta:
+        model = Product
+        fields = ['product_name','image', 'category', 'description', 'minimum_price', 'start_date', 'duration']
+
+
+class Bid(forms.ModelForm):
+    class Meta:
+        model=Bidders
+        fields = ['bid_amount']

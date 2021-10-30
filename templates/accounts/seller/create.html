@@ -1,0 +1,28 @@
+{% extends  'base.html' %}
+{% load static %}
+{% block 'title' %} Dashboard  {% endblock %}
+
+
+{% block 'body' %}
+
+<div class="row">
+    {% include 'components/sellersidenav.html' %}
+    <div class="col-10 right-side">
+        <div class="card form-card">
+            {% include 'components/messages.html' %}
+            <div class="card-body">
+                <h3>Add Product </h3>
+                <form action="" enctype="multipart/form-data" method="post">
+                    {{form.as_p}}
+                    {% csrf_token %}
+                    <button style="float:right;" type="submit" class="btn btn-success">Save</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+

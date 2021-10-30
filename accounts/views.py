@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
-from .form import UserCreationForm, LoginForm
+
+from home.models import Product
+from .form import UserCreationForm, LoginForm, createProduct, Bid
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 
-# from classroom.models import ClassRoom
-# from classroom.models import Enroll
 # Create your views here.
 
 def signin(request):
@@ -28,7 +28,7 @@ def signin(request):
     return render(request, 'accounts/login.html', context={'form': form})
 
 
-def signuSeller(request):
+def signupSeller(request):
     form = UserCreationForm(request.POST or None)
     print(request.POST)
     if form.is_valid():
@@ -50,8 +50,8 @@ def signupBuyer(request):
     print(request.POST)
     if form.is_valid():
         user = form.save()
-        user.isTeacher = False
-        user.isStudent = True
+        user.isSeller = False
+        user.isBuyer = True
         user.set_password(request.POST['password'])
         user.save()
         messages.add_message(request, messages.SUCCESS, "signup successfully")
@@ -65,16 +65,17 @@ def signupBuyer(request):
 # @login_required(login_url='signin')
 def buyerDashboard(request):
     if request.user.isBuyer:
-        context = {}
-
+        product = Product.objects.all()
+        context = {'product': product}
         return render(request, 'accounts/buyer/dashboard.html', context)
     return redirect('sellerDashboard')
 
 
 # @login_required(login_url='signin')
 def sellerDashboard(request):
-    if request.user.isSeler:
-        context = {}
+    if request.user.isSeller:
+        product = Product.objects.all()
+        context = {'product': product}
         return render(request, 'accounts/seller/dashboard.html', context)
     return redirect('buyerDashboard')
 
@@ -82,3 +83,38 @@ def sellerDashboard(request):
 def signout(request):
     logout(request)
     return redirect('signin')
+
+
+######################################################
+def productDetails(request, id):
+    product = Product.objects.filter(pk=id)
+    context = {'product': product, }
+    if request.user.isBuyer:
+        form = Bid(request.POST or None, )
+        if form.is_valid():
+            bid = form.save()
+            bid.product_id= request.POST['pid']
+            bid.user_id = request.user
+            bid.save()
+        return render(request, 'accounts/buyer/productDetails.html', context,{'form':form})
+
+
+    return render(request, 'accounts/buyer/productDetails.html', context)
+
+
+def addProduct(request):
+    if request.user.isSeller:
+        form = createProduct(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            form.instance.user = request.user
+            product = form.save()
+            # product.user_id = request.user
+            product.save()
+            messages.add_message(request, messages.SUCCESS, "product added successfully")
+            form = createProduct()
+        context = {
+            'form': form
+        }
+        return render(request, 'accounts/seller/create.html', context)
+    else:
+        return redirect('buyerDashboard')
