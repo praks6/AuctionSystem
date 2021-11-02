@@ -25,7 +25,17 @@
                 <div class="card-body">
                     <h5 class="card-title">{{p.product_name}}</h5>
                     <p class="card-text">{{p.description|truncatewords:10}}</p>
+                    <p>Number no bidders : {{no_bidder}}</p>
+                    {% if p.is_expired %}
+                    <p class="btn btn-danger">Session Expired</p>
+                    <p>Winner: {{winner.user}}</p>
+                    <p>Sold Price : {{bidded_price}}</p>
+                    {% else %}
+
                     <a href="{% url 'productDetails' p.id %}" class="btn btn-primary">View Details</a>
+
+                    {% endif %}
+
                 </div>
             </div>
         </div>

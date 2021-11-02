@@ -26,10 +26,10 @@
                     <h5 class="card-title">{{p.product_name}}</h5>
                     <p class="card-text">{{p.description}}</p>
                     {% if request.user.isBuyer %}
-                    <form action="" enctype="multipart/form-data" method="POST">
-                        <input type="hidden" value="{{p.id}}" name="pid">
-                        {{form.as_p}}
+                    <form action="" method="POST" enctype="multipart/form-data" >
                         {% csrf_token %}
+                        {{form.as_p}}
+                        <input type="hidden" value="{{p.id}}" name="pid"/>
                         <button style="float:right;" type="submit" class="btn btn-success">Save</button>
                     </form>
                     {% endif %}

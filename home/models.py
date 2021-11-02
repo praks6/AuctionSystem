@@ -18,6 +18,7 @@ class Product(models.Model):
     expire_date = models.DateField()
     created_date = models.DateField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_expired = models.BooleanField(blank=True, null= True)
 
     def __str__(self):
         return self.product_name

@@ -1,7 +1,10 @@
+from datetime import datetime
+
+from django.db.models import Max, Q, Count
 from django.shortcuts import render, redirect, HttpResponseRedirect
 
-from home.models import Product
-from .form import UserCreationForm, LoginForm, createProduct, Bid
+from home.models import Product, Bidders, Winner
+from .form import UserCreationForm, LoginForm, createProduct, BidForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -66,7 +69,37 @@ def signupBuyer(request):
 def buyerDashboard(request):
     if request.user.isBuyer:
         product = Product.objects.all()
-        context = {'product': product}
+        context ={}
+        for p in product:
+            if p.expire_date < datetime.today().date():
+                p.is_expired = True
+                p.save()
+
+                bbb = Bidders.objects.filter(product_id=p.id)
+                no_bidder = bbb.aggregate(Count('user_id'))['user_id__count']
+
+                if p.is_expired:
+                    bid_max_val =bbb.aggregate(Max('bid_amount'))['bid_amount__max']
+                    # print(bid_max_val)
+
+                    bidders = Bidders.objects.filter( Q(product_id = p.id) & Q(bid_amount = bid_max_val))
+                    print(bidders)
+                    for b in bidders:
+                        winner = Winner.objects.filter(Q(user_id =b.user_id) & Q( product_id=p.id)).first()
+                        if winner is not None:
+                            pass
+                        else:
+                            w=Winner.objects.create(product_id = p.id, user_id =b.user_id)
+
+            # else:
+            #     product = Product.objects.filter(is_expired = False)
+            #     context = {'product': product}
+
+        context = {'product': product,
+                   'bidded_price': bid_max_val,
+                   'no_bidder': no_bidder,
+                   'winner': winner,
+                   }
         return render(request, 'accounts/buyer/dashboard.html', context)
     return redirect('sellerDashboard')
 
@@ -88,16 +121,35 @@ def signout(request):
 ######################################################
 def productDetails(request, id):
     product = Product.objects.filter(pk=id)
-    context = {'product': product, }
-    if request.user.isBuyer:
-        form = Bid(request.POST or None, )
-        if form.is_valid():
-            bid = form.save()
-            bid.product_id= request.POST['pid']
-            bid.user_id = request.user
-            bid.save()
-        return render(request, 'accounts/buyer/productDetails.html', context,{'form':form})
+    print(id)
+    context = {'product': product}
 
+    if request.user.isBuyer:
+        form = BidForm(request.POST or None)
+        if form.is_valid():
+            bid_amount = form.cleaned_data['bid_amount']
+            bidder = Bidders.objects.filter(product_id = id,bid_amount = bid_amount,user_id = request.user)
+            # bidder = Bidders.objects.filter(Q(product_id = id) & Q(bid_amount = bid_amount) & Q(user_id = request.user))
+            print(bidder.query)
+            if bidder is not None:
+                messages.add_message(request, messages.ERROR, "bidded already")
+
+            elif bid_amount <= product.minimum_price:
+                messages.add_message(request, messages.ERROR, "you can not assign amount less than minimum price")
+
+            else:
+                bid = form.save(commit=False)
+                bid.user = request.user
+                bid.product_id= id
+                bid.save()
+                messages.add_message(request, messages.SUCCESS, "bidded successfully")
+
+        context = {
+            'form': form,
+            'product': product
+            }
+
+        return render(request, 'accounts/buyer/productDetails.html', context)
 
     return render(request, 'accounts/buyer/productDetails.html', context)
 
@@ -108,7 +160,6 @@ def addProduct(request):
         if form.is_valid():
             form.instance.user = request.user
             product = form.save()
-            # product.user_id = request.user
             product.save()
             messages.add_message(request, messages.SUCCESS, "product added successfully")
             form = createProduct()
