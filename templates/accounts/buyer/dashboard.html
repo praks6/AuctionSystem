@@ -31,7 +31,7 @@
                     <p>Winner: {{winner.user}}</p>
                     <p>Sold Price : {{bidded_price}}</p>
                     {% else %}
-
+                    <p>{{p.remaining_time}} days</p>
                     <a href="{% url 'productDetails' p.id %}" class="btn btn-primary">View Details</a>
 
                     {% endif %}
