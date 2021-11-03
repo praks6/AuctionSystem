@@ -1,0 +1,44 @@
+body{
+ margin:0px;
+ padding:0px;
+ overflow-x:hidden;
+}
+.signup-card{
+  margin-top:3%;
+}
+
+.errorlist li{
+ color:red;
+}
+
+.left-side,.menu-list li{
+  background-color:black;
+  color:white;
+}
+
+.menu-list li a{
+ color:white;
+ text-decoration:none;
+}
+
+.menu-list-card{
+ border:0;
+}
+
+.left-side{
+ height:100vh;
+ top:0;
+ position:fixed;
+}
+.right-side{
+left:18%;
+ position:relative;
+}
+.form-card{
+  margin:20px;
+}
+
+.class-image{
+  height:250px;
+  overflow-y:hidden;
+}
