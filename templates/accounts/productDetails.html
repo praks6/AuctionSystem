@@ -6,7 +6,11 @@
 {% block 'body' %}
 
 <div class="row">
-    {% include 'components/buyersidenav.html' %}
+    {% if request.user.isBuyer %}
+        {% include 'components/buyersidenav.html' %}
+    {% else %}
+        {% include 'components/sellersidenav.html' %}
+    {% endif %}
     <div class="col-10 right-side">
         {% include 'components/messages.html' %}
         <h3>Dashboard </h3>

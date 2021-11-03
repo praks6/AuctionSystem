@@ -1,13 +1,16 @@
 {% extends  'base.html' %}
 {% load static %}
-{% block 'title' %} Dashboard - Buyer {% endblock %}
+{% block 'title' %} Dashboard {% endblock %}
 
 
 {% block 'body' %}
 
 <div class="row">
-    
-    {% include 'components/buyersidenav.html' %}
+    {% if request.user.isBuyer %}
+        {% include 'components/buyersidenav.html' %}
+    {% else %}
+    {% include 'components/sellersidenav.html' %}
+    {% endif %}
     <div class="col-10 right-side">
         {% include 'components/messages.html' %}
         <h3>Dashboard </h3>
@@ -26,14 +29,15 @@
                 <div class="card-body">
                     <h5 class="card-title">{{p.product_name}}</h5>
                     <p class="card-text">{{p.description|truncatewords:10}}</p>
-                    <p>Number no bidders : {{no_bidder}}</p>
+                    <p>Number no bidders : {{no_bidder.0 }}</p>
                     {% if p.is_expired %}
-                    <p class="btn btn-danger">Session Expired</p>
-                    <p>Winner: {{winner.user}}</p>
-                    <p>Sold Price : {{bidded_price}}</p>
+                        <p class="btn btn-danger">Session Expired</p>
+                        <p>Winner: {{winner.user}}</p>
+                        <p>Sold Price : {{bidded_price}}</p>
                     {% else %}
-                    <p>{{p.remaining_time}} days</p>
-                    <a href="{% url 'productDetails' p.id %}" class="btn btn-primary">View Details</a>
+                        <p>current maximum bid price : {{bidded_price}}</p>
+                        <p>{{p.remaining_time}}</p>
+                        <a href="{% url 'productDetails' p.id %}" class="btn btn-primary">View Details</a>
 
                     {% endif %}
 

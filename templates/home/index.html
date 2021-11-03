@@ -1,19 +1,41 @@
 {% extends  'base.html' %}
+{% load static %}
 {% block 'title' %} Home Page  {% endblock %}
 
 
 {% block 'body' %}
 {% include 'components/navbar.html' %}
-{% for p in product %}
-<p>{{p.product_name}}</p>
-<!--{% if p.remaining_time < 0 %}-->
-<p>Expired</p>
-<!--{% else %}-->
-<p>{{p.remaining_time}}</p>
-{% endif %}
 
-{% endfor %}
+<div class="row">
+    {% for p in product %}
+    <div class="col-3">
+        <div class="card">
+                <div class="class-image">
+                   {% if p.image %}
+                        <img src="{{MEDIA_URL}}{{p.image.url}}" class="card-img-top" alt="...">
+                   {% else %}
+                        <img src="{% static 'img/placeholder.png' %}" class="card-img-top" alt="...">
+                   {% endif %}
+                </div>
 
-<h2>hello</h2>
-<h2>hello</h2>
+                <div class="card-body">
+                    <h5 class="card-title">{{p.product_name}}</h5>
+                    <p class="card-text">{{p.description|truncatewords:10}}</p>
+
+                    {% if p.is_expired %}
+                        <p class="btn btn-danger">Session Expired</p>
+
+                    {% else %}
+
+                        <p> Ramaining time: {{p.remaining_time}}</p>
+
+                        <a href="{% url 'productDetails' p.id %}" class="btn btn-primary">View Details</a>
+
+                    {% endif %}
+
+                </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

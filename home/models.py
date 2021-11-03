@@ -1,4 +1,4 @@
-from datetime import timedelta, datetime
+from datetime import datetime, timezone, timedelta
 
 from django.core.validators import RegexValidator
 from django.db import models
@@ -30,17 +30,8 @@ class Product(models.Model):
 
     @property
     def remaining_time(self):
-        return self.expire_date-datetime.now().date()
+        return self.expire_date-datetime.now()
 
-
-# class Seller(models.Model):
-#     created = models.DateTimeField(auto_now_add=True)
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-#
-#     def __unicode__(self):
-#         return self.user_name
-#
 
 class Bidders(models.Model):
     numeric = RegexValidator(r'^[0-9]', 'Only numerics are allowed.')
