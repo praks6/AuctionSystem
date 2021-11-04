@@ -16,8 +16,10 @@ def signin(request):
         if user is not None:
             login(request, user)
             return redirect('dashboard')
-        return redirect('signin')
+
         messages.add_message(request, messages.ERROR, "email and password does not match")
+        return redirect('signin')
+
     return render(request, 'accounts/login.html', context={'form': form})
 
 

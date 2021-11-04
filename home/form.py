@@ -16,6 +16,8 @@ class createProduct(forms.ModelForm):
 
 
 class BidForm(forms.ModelForm):
+    bid_amount = forms.FloatField(
+        widget=forms.TextInput(attrs={ 'id':'bid', 'class': 'form-control bid', 'placeholder': 'enter your bid amount'}))
     class Meta:
         model = Bidders
         fields = ['bid_amount', ]

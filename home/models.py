@@ -13,10 +13,10 @@ class Product(models.Model):
     category = models.CharField(max_length=100)
     description = models.TextField()
     minimum_price = models.FloatField()
-    start_date = models.DateField()
+    start_date = models.DateTimeField()
     duration = models.IntegerField()
-    expire_date = models.DateField()
-    created_date = models.DateField(auto_now_add=True)
+    expire_date = models.DateTimeField()
+    created_date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     is_expired = models.BooleanField(blank=True, null= True)
 
@@ -34,12 +34,10 @@ class Product(models.Model):
 
 
 class Bidders(models.Model):
-    numeric = RegexValidator(r'^[0-9]', 'Only numerics are allowed.')
-
     created = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    bid_amount = models.CharField(max_length=255, validators=[numeric])
+    bid_amount = models.FloatField()
 
 
 class Winner(models.Model):

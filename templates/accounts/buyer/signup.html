@@ -20,7 +20,8 @@
                     <form action="{% url 'signupbuyer' %}" method="post">
                         {{form.as_p}}
                         {% csrf_token %}
-                        <button style="float:right;" type="submit" class="btn btn-primary">Save</button>
+                        <button style="float:right;" type="submit" class="btn btn-primary">Register</button>
+                         Already have an account <a href="{% url 'signin'%}">click here</a> for login
                     </form>
                 </div>
             </div>

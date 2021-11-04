@@ -1,0 +1,35 @@
+{% extends  'base.html' %}
+{% load static %}
+{% block 'title' %} Dashboard  {% endblock %}
+
+
+{% block 'body' %}
+
+<div class="row">
+    {% include 'components/buyersidenav.html' %}
+    <div class="col-10 right-side">
+        <div class="card form-card">
+            {% include 'components/messages.html' %}
+            <div class="card-body">
+                <h3>Payment </h3>
+                <form action="" method="POST" enctype="multipart/form-data" >
+                    {% csrf_token %}
+                    <select name = "payment_method" >
+                        <option value="net_banking">Net Banking</option>
+                        <option value="debit_card">Debit</option>
+                        <option value="credit_card">Credit</option>
+                    </select>
+                    <span>Bid amount</span><input type="text" value="{{bid_amount}}" readonly >
+                    <span>product id </span><input type="text" value="{{product_id}}" readonly>
+                    <span>user id </span><input type="text" value="{{user}}" readonly>
+                    <button style="float:right;" type="submit" class="btn btn-success">Pay</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+

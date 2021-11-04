@@ -1,0 +1,38 @@
+{% extends  'base.html' %}
+{% load static %}
+{% block 'title' %} Dashboard  {% endblock %}
+
+
+{% block 'body' %}
+
+<div class="row">
+    {% include 'components/buyersidenav.html' %}
+    <div class="col-10 right-side">
+        <div class="card form-card">
+            {% include 'components/messages.html' %}
+            <div class="card-body">
+                <h3>Payment </h3>
+                <form action="{% url 'paid' %}" method="POST" enctype="multipart/form-data" >
+                    {% csrf_token %}
+                    <select name = "" >
+                        <option >Nepal Restra Bank</option>
+                        <option >Banijya Bank</option>
+                        <option >mega Bank</option>
+                        <option >Global Bank</option>
+                        <option >NIC Asia Bank</option>
+                        <option >NMB Bank</option>
+                    </select>
+                    <span>Bid amount</span><input type="text" name="bid_amount" value="{{bid_amount}}" readonly >
+                    <span>product id </span><input type="text" name="product_id" value="{{product_id}}" readonly>
+                    <span>user id </span><input type="text" name="user" value="{{user}}" readonly>
+                    <button style="float:right;" type="submit" class="btn btn-success">Confirm</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+

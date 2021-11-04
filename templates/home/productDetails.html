@@ -1,6 +1,6 @@
 {% extends  'base.html' %}
 {% load static %}
-{% block 'title' %} Dashboard - Seller {% endblock %}
+{% block 'title' %} Product Details {% endblock %}
 
 
 {% block 'body' %}
@@ -11,6 +11,7 @@
     {% else %}
         {% include 'components/sellersidenav.html' %}
     {% endif %}
+
     <div class="col-10 right-side">
         {% include 'components/messages.html' %}
         <h3>Dashboard </h3>
@@ -28,14 +29,30 @@
                 <div class="card-body">
                     <h5 class="card-title">{{product.product_name}}</h5>
                     <p class="card-text">{{product.description}}</p>
-                    {% if request.user.isBuyer %}
-                    <form action="" method="POST" enctype="multipart/form-data" >
+
+                    {% if product.is_expired %}
+                        <p class="btn btn-danger">Session Expired</p>
+                        <p>Winner: {{winner.user}}</p>
+                        <p>Sold Price : {{bidded_max_price}}</p>
+
+                    {% else %}
+
+                        <p>current maximum bid price : {{bidded_max_price}}</p>
+                        <p>Total number of bidder : {{no_bidder}}</p>
+                        <p>{{product.remaining_time}}</p>
+
+                    {% endif %}
+
+
+                    {% if request.user.isBuyer and not product.is_expired %}
+
+                        <form action="{% url 'bid' product.id%}" method="POST" enctype="multipart/form-data" >
                         {% csrf_token %}
                         {{form.as_p}}
-                        <input type="hidden" value="{{p.id}}" name="pid"/>
-                        <button style="float:right;" type="submit" class="btn btn-success">Save</button>
-                    </form>
+                        <button style="float:right;" type="submit" class="btn btn-success">Bid</button>
+                        </form>
                     {% endif %}
+
                 </div>
             </div>
         </div>

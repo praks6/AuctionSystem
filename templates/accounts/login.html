@@ -21,6 +21,8 @@
                         {{form.as_p}}
                         {% csrf_token %}
                         <button style="float:right;" type="submit" class="btn btn-primary">Login</button>
+                        If you don't have account <a href="{% url 'signupbuyer'%}">click here</a> for register as buyer <br>
+                        If you don't have account <a href="{% url 'signupseller'%}">click here</a> for register as seller
                     </form>
                 </div>
             </div>
