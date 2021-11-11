@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="472c2d17-25c8-41c9-8007-a75f48860409" name="Changes" comment="payment method is added">
+      <change afterPath="$PROJECT_DIR$/templates/accounts/buyer/history.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/accounts/seller/history.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/home/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/home/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/components/buyersidenav.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/components/buyersidenav.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/components/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/components/navbar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/components/sellersidenav.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/components/sellersidenav.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/index.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="202bFUst3xxEDFfM9ZhxOwwsa69" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\AuctionProject\templates\accounts" />
+      <recent name="F:\AuctionProject\templates\components" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\AuctionProject\templates\home" />
+      <recent name="F:\AuctionProject\templates\accounts\buyer" />
+      <recent name="F:\AuctionProject\templates\components" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="472c2d17-25c8-41c9-8007-a75f48860409" name="Changes" comment="" />
+      <created>1635245525917</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1635245525917</updated>
+    </task>
+    <task id="LOCAL-00001" summary="signup signin and product models are added">
+      <created>1635331751323</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1635331751323</updated>
+    </task>
+    <task id="LOCAL-00002" summary="seller and buyer dashboard is added">
+      <created>1635592706387</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1635592706387</updated>
+    </task>
+    <task id="LOCAL-00003" summary="isexpired functionality is added">
+      <created>1635828029939</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1635828029939</updated>
+    </task>
+    <task id="LOCAL-00004" summary="ramaining days">
+      <created>1635828412972</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1635828412972</updated>
+    </task>
+    <task id="LOCAL-00005" summary="updated">
+      <created>1635946739484</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1635946739484</updated>
+    </task>
+    <task id="LOCAL-00006" summary="updated">
+      <created>1635946937557</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1635946937557</updated>
+    </task>
+    <task id="LOCAL-00007" summary="payment method is added">
+      <created>1636042658814</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1636042658814</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="signup signin and product models are added" />
+    <MESSAGE value="seller and buyer dashboard is added" />
+    <MESSAGE value="isexpired functionality is added" />
+    <MESSAGE value="ramaining days" />
+    <MESSAGE value="updated" />
+    <MESSAGE value="payment method is added" />
+    <option name="LAST_COMMIT_MESSAGE" value="payment method is added" />
+  </component>
+</project>

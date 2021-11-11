@@ -10,4 +10,7 @@ urlpatterns = [
     path('bid/<int:id>/', views.bid, name='bid'),
     path('payment/', views.payment, name = 'payment'),
     path('paid/', views.afterPaid, name='paid'),
+    path('history/', views.history, name='history'),
+    path('sellerhistory/', views.sellerhistory, name='sellerhistory'),
+    path('delete/<int:id>/', views.delete, name='delete'),
 ]

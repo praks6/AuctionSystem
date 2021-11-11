@@ -1,0 +1,48 @@
+{% extends  'base.html' %}
+{% load static %}
+{% block 'title' %} Dashboard  {% endblock %}
+
+
+{% block 'body' %}
+
+<div class="row">
+    {% include 'components/buyersidenav.html' %}
+    <div class="col-10 right-side">
+        <div class="card form-card">
+            {% include 'components/messages.html' %}
+            <div class="card-body">
+                <h3>History</h3>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">user</th>
+                      <th scope="col">Product name</th>
+                      <th scope="col">Minimum Price</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for h in history%}
+                    <tr>
+                      <td>{{h.user}}</td>
+                      <td>{{h.product}}</td>
+                      <td>{{h.bid_amount}}</td>
+                      <td>
+                          <a href="{% url 'productDetails' h.id %}" class="btn btn-primary">View Details</a>
+                          {% if not product.is_expired %}
+                          <a href="{% url 'delete' h.id %}" class="btn btn-danger"> Delete</a>
+                          {% endif%}
+                      </td>
+                    </tr>
+                  {% endfor%}
+                  </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+

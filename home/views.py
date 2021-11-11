@@ -22,7 +22,7 @@ def search(request):
     product = Product.objects.filter(Q(product_name__icontains=search) | Q(description__icontains=search)).order_by(
         '-start_date')
     context = {'product': product}
-    return render(request, "home/index.html", context)
+    return render(request, "home/dashboard.html", context)
 
 
 ################################################################
@@ -182,3 +182,35 @@ def payment(request):
             return render(request, 'accounts/buyer/net_banking.html', context_dict)
 
     return render(request, 'accounts/buyer/payment.html', context_dict)
+
+#######################################3
+def history(request):
+    history = Bidders.objects.filter( user_id=request.user)
+    context = {'history':history}
+    return render(request, 'accounts/buyer/history.html',context)
+
+##########################################
+def sellerhistory(request):
+    sellerhistory = Product.objects.filter( user_id=request.user)
+    context = {'sellerhistory':sellerhistory}
+    return render(request, 'accounts/seller/history.html',context)
+##########################################
+def delete(request, id):
+    product = Product.objects.get(pk=id)
+
+    if request.user.isBuyer and not product.is_expired:
+        bidderhistory = Bidders.objects.get(pk=id)
+        bidderhistory.delete()
+
+        messages.add_message(request, messages.SUCCESS, "deleted successfully")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+    if request.user.isSeller and not product.is_expired:
+        product = Bidders.objects.get(pk=id)
+        product.delete()
+
+        messages.add_message(request, messages.SUCCESS, "deleted successfully")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+    messages.add_message(request, messages.ERROR, "Expired item can not be deleted")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

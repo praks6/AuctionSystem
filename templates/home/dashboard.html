@@ -13,7 +13,21 @@
     {% endif %}
     <div class="col-10 right-side">
         {% include 'components/messages.html' %}
+
+        <div class="row">
+            <div class="col-4">
         <h3>Dashboard </h3>
+            </div>
+            <div class="col-2">
+            </div>
+            <div class="col-4 mt-1">
+                <form class="d-flex" action="{% url 'search' %}" method="GET" >
+            <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+            </div>
+            <div>
+
               <hr>
         <div class="row">
        {% for p in  product %}
@@ -29,6 +43,12 @@
                 <div class="card-body">
                     <h5 class="card-title">{{p.product_name}}</h5>
                     <p class="card-text">{{p.description|truncatewords:10}}</p>
+                    {% if p.is_expired %}
+                            <small>Session Expired</small>
+                    <br>
+
+                    {% endif %}
+
                     <a href="{% url 'productDetails' p.id %}" class="btn btn-primary">View Details</a>
                 </div>
             </div>
