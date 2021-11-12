@@ -18,7 +18,7 @@
               <hr>
         <div class="row">
           <div class="col-4">
-            <div class="card">
+            <div class="card ">
                 <div class="class-image">
                    {% if product.image %}
                     <img src="{{MEDIA_URL}}{{product.image.url}}" class="card-img-top" alt="...">
@@ -26,9 +26,11 @@
                     <img src="{% static 'img/placeholder.png' %}" class="card-img-top" alt="...">
                    {% endif %}
                 </div>
-                <div class="card-body">
+                <div class="card-body mx-2">
+                    <small class="card-text">{{product.category}}</small>
                     <h5 class="card-title">{{product.product_name}}</h5>
                     <p class="card-text">{{product.description}}</p>
+                    <p class="card-text"> Initial Price: {{product.minimum_price}}</p>
 
                     {% if product.is_expired %}
                         <p class="btn btn-danger">Session Expired</p>
@@ -46,16 +48,73 @@
 
                     {% if request.user.isBuyer and not product.is_expired %}
 
-                        <form action="{% url 'bid' product.id%}" method="POST" enctype="multipart/form-data" >
-                        {% csrf_token %}
-                        {{form.as_p}}
-                        <button style="float:right;" type="submit" class="btn btn-success">Bid</button>
+                        <form class="d-flex" action="{% url 'bid' product.id%}" method="POST" enctype="multipart/form-data" >
+                            {% csrf_token %}
+                            {{form.as_p}}
+                            <button type="submit" class="btn btn-outline-primary mx-4 mb-3"><i class="fa fa-gavel" aria-hidden="true"></i></button>
                         </form>
                     {% endif %}
 
                 </div>
             </div>
         </div>
+
+        <div class="col-6 mx-5 ">
+            <h6>Comments Section</h6>
+            <hr width="30%">
+            <form class="d-flex" action="{% url 'comment' product.id %}" method="POST" >
+                {% csrf_token %}
+                    <input class="form-control me-2" type="search" name="comment" placeholder="comment" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit"><i class="far fa-comment"></i></button>
+            </form>
+
+
+             {% for comment in comments%}
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h6 class="card-title">{{comment.user}}</h6>
+                    <p class="card-text">
+                        {{comment.comment}}
+                        {% if request.user == comment.user %}
+
+                                <!-- Button trigger modal -->
+                        <span class="text-info mx-2" data-bs-toggle="modal" data-bs-target="#Comment{{comment.id}}">
+                            <i class="fas fa-edit"></i>
+                        </span>
+
+
+                        <a href="{% url 'deletecomment' comment.id %}" class="text-danger"> <i  class="fas fa-trash"></i></a>
+                        {% endif%}
+                    </p>
+
+
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="Comment{{comment.id}}" tabindex="-1" aria-labelledby="CommentLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="CommentLabel">Edit Comment</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+
+                                 <form class="d-flex" action="{% url 'editcomment' comment.id %}" method="POST" >
+                                    {% csrf_token %}
+                                     <input class="form-control me-2" type="search" name="comment" placeholder="comment" aria-label="Search">
+                                     <button class="btn btn-outline-success" type="submit"><i class="fas fa-comment"></i>
+                                     </button>
+                                 </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                </div>
+            </div>
+             {% endfor%}
+        </div>
+
        </div>
     </div>
 </div>

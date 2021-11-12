@@ -1,12 +1,13 @@
 from datetime import timezone, datetime
-
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Count, Max, Q
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect,get_object_or_404
-from .form import BidForm, createProduct
-from .models import Product, Bidders, Winner
+from .form import BidForm, createProduct,CommentForm
+from .models import Product, Bidders, Winner,Comment
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 
@@ -16,7 +17,7 @@ def home(request):
     context = {'product': product}
     return render(request, "home/index.html", context)
 
-
+@login_required(login_url = 'signin')
 def search(request):
     search = request.GET.get('search')
     product = Product.objects.filter(Q(product_name__icontains=search) | Q(description__icontains=search)).order_by(
@@ -27,27 +28,34 @@ def search(request):
 
 ################################################################
 
-# @login_required(login_url = 'signin')
+@login_required(login_url = 'signin')
 def Dashboard(request):
     product = Product.objects.all().order_by('-start_date')
-    context = {'product': product}
+    paginator = Paginator(product, 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {'product': page_obj}
+
     return render(request, 'home/dashboard.html', context)
 
 
 ######################################################
-
+@login_required(login_url = 'signin')
 def productDetails(request, id):
     product = Product.objects.get(pk=id)
+    comments = Comment.objects.filter(product_id=id).order_by('created')
 
     if product.expire_date < datetime.now():
         product.is_expired = True
         product.save()
 
-    bbb = Bidders.objects.filter(product_id=product.id)
-    no_bidder = bbb.aggregate(Count('user_id'))['user_id__count']
-    bid_max_val = bbb.aggregate(Max('bid_amount'))['bid_amount__max']
+    bidder = Bidders.objects.filter(product_id=product.id)
+    no_bidder = bidder.aggregate(Count('user_id'))['user_id__count']
+    bid_max_val = bidder.aggregate(Max('bid_amount'))['bid_amount__max']
 
     if product.is_expired:
+        winner={}
         bidders = Bidders.objects.filter(Q(product_id=product.id) & Q(bid_amount=bid_max_val))
         for b in bidders:
             winner = Winner.objects.filter(Q(user_id=b.user_id) & Q(product_id=product.id)).first()
@@ -59,6 +67,7 @@ def productDetails(request, id):
 
         context = {
             'product': product,
+            'comments': comments,
             'bidded_max_price': bid_max_val,
             'no_bidder': no_bidder,
             'winner': winner,
@@ -68,14 +77,16 @@ def productDetails(request, id):
         form = BidForm()
         context = {
             'product': product,
+            'comments': comments,
             'bidded_max_price': bid_max_val,
             'no_bidder': no_bidder,
             'form': form,
         }
 
-    if request.user.isSeller and request.user.is_admin:
+    if request.user.isSeller or request.user.is_admin:
         context = {
             'product': product,
+            'comments': comments,
             'bidded_max_price': bid_max_val,
             'no_bidder': no_bidder,
         }
@@ -84,6 +95,7 @@ def productDetails(request, id):
 
 
 #############################################################################
+@login_required(login_url = 'signin')
 def afterPaid(request):
     if request.method == 'POST':
         bid_amount = float(request.POST['bid_amount'])
@@ -133,6 +145,7 @@ def afterPaid(request):
 
 
 ############################################################################
+@login_required(login_url = 'signin')
 def addProduct(request):
     if request.user.isSeller or request.user.is_admin:
         form = createProduct(request.POST or None, request.FILES or None)
@@ -151,6 +164,7 @@ def addProduct(request):
 
 #######################################################
 
+@login_required(login_url = 'signin')
 def bid(request, id):
     product = Product.objects.get(pk=id)
     if request.user.isBuyer and not product.is_expired:
@@ -164,7 +178,9 @@ def bid(request, id):
     messages.add_message(request, messages.ERROR, "you can't bid for expired item")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+######################################33
 
+@login_required(login_url = 'signin')
 def payment(request):
     bid_amount = request.session.get('bid_amount')
     product_id = request.session.get('product')
@@ -183,34 +199,90 @@ def payment(request):
 
     return render(request, 'accounts/buyer/payment.html', context_dict)
 
-#######################################3
+#######################################
+@login_required(login_url = 'signin')
 def history(request):
     history = Bidders.objects.filter( user_id=request.user)
     context = {'history':history}
     return render(request, 'accounts/buyer/history.html',context)
 
 ##########################################
+@login_required(login_url = 'signin')
 def sellerhistory(request):
     sellerhistory = Product.objects.filter( user_id=request.user)
     context = {'sellerhistory':sellerhistory}
     return render(request, 'accounts/seller/history.html',context)
+
 ##########################################
+@login_required(login_url = 'signin')
 def delete(request, id):
     product = Product.objects.get(pk=id)
-
     if request.user.isBuyer and not product.is_expired:
-        bidderhistory = Bidders.objects.get(pk=id)
+        bidderhistory = Bidders.objects.get(product_id=id)
         bidderhistory.delete()
 
         messages.add_message(request, messages.SUCCESS, "deleted successfully")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     if request.user.isSeller and not product.is_expired:
-        product = Bidders.objects.get(pk=id)
         product.delete()
 
         messages.add_message(request, messages.SUCCESS, "deleted successfully")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
     messages.add_message(request, messages.ERROR, "Expired item can not be deleted")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+##################################
+@login_required(login_url = 'signin')
+def get_product_by_category(request):
+    category = request.GET.get("category" or None)
+    if category == "":
+        product = Product.objects.all().order_by('-start_date')
+        return render(request, 'home/dashboard.html', {'product': product})
+    product = Product.objects.filter(category=category)
+    return render(request, 'home/dashboard.html', {'product': product})
+
+#################################
+@login_required(login_url = 'signin')
+def comment(request, id):
+    if request.method == 'POST':
+        comment =request.POST['comment']
+
+        if Comment.objects.filter(product_id=id, user_id=request.user.id,comment=comment).exists():
+            messages.add_message(request, messages.ERROR, "your same comment already exist")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+        elif comment == "":
+            messages.add_message(request, messages.ERROR, "Write something")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+        else:
+            Comment.objects.create(product_id=id, user_id=request.user.id,comment=comment)
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required(login_url = 'signin')
+def editcomment(request, id):
+    if request.method == 'POST':
+        c = get_object_or_404(Comment, pk=id, user_id=request.user)
+        comment = request.POST['comment']
+        if comment == "":
+            messages.add_message(request, messages.ERROR, "Write something")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            c.comment = comment
+            c.save()
+        messages.add_message(request, messages.SUCCESS, "comment updated")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    cform =CommentForm()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'),{'cform':cform})
+
+
+@login_required(login_url = 'signin')
+def deletecomment(request, id):
+    c = get_object_or_404(Comment, pk =id, user_id=request.user)
+    c.delete()
+    messages.add_message(request, messages.ERROR, "comment deleted")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

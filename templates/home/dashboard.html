@@ -15,24 +15,36 @@
         {% include 'components/messages.html' %}
 
         <div class="row">
-            <div class="col-4">
-        <h3>Dashboard </h3>
+            <div class="col-3">
+                <h3>Dashboard </h3>
             </div>
-            <div class="col-2">
+            <div class="col-3 mt-1 ">
+
+                <form class="d-flex" action="{% url 'category' %}" method="GET" >
+                    <select name="category" class="form-control me-2">
+                      <option value="">Select Category</option>
+                        {% for p in  product %}
+                        <option value="{{p.category}}">{{p.category}}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-outline-success" type="submit"><i class="fas fa-filter"></i></button>
+                </form>
             </div>
-            <div class="col-4 mt-1">
+
+            <div class="col-3 mt-1 mx-5">
                 <form class="d-flex" action="{% url 'search' %}" method="GET" >
-            <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+                    <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit"><i class="fas fa-search"></i></button>
+                </form>
             </div>
-            <div>
+            </div>
+
 
               <hr>
         <div class="row">
-       {% for p in  product %}
+            {% for p in  product %}
           <div class="col-4">
-            <div class="card">
+            <div class="card mx-2">
                 <div class="class-image">
                    {% if p.image %}
                     <img src="{{MEDIA_URL}}{{p.image.url}}" class="card-img-top" alt="...">
@@ -44,12 +56,12 @@
                     <h5 class="card-title">{{p.product_name}}</h5>
                     <p class="card-text">{{p.description|truncatewords:10}}</p>
                     {% if p.is_expired %}
-                            <small>Session Expired</small>
+                    <small class="text-danger">Session Expired</small>
                     <br>
 
                     {% endif %}
 
-                    <a href="{% url 'productDetails' p.id %}" class="btn btn-primary">View Details</a>
+                    <a href="{% url 'productDetails' p.id %}" class="btn btn-primary"> View <i class="fas fa-eye"></i></a>
                 </div>
             </div>
         </div>
@@ -58,6 +70,28 @@
     </div>
 </div>
 
+
+
+    <!--Pagination-->
+      <div class="container mt-5 p-4">
+        <div class="pagination justify-content-center">
+            <span class="step-links">
+              {% if product.has_previous %}
+                  <a href="?page=1">&laquo; first</a>
+                  <a href="?page={{ movies.previous_page_number }}">previous</a>
+              {% endif %}
+
+                <span class="current">
+                    Page {{ product.number }} of {{ product.paginator.num_pages }}
+                </span>
+
+              {% if product.has_next %}
+                  <a href="?page={{ product.next_page_number }}">next</a>
+                  <a href="?page={{ product.paginator.num_pages }}">last &raquo;</a>
+              {% endif %}
+            </span>
+            </div>
+        </div>
+      <!--end of Pagination-->
+
 {% endblock %}
-
-

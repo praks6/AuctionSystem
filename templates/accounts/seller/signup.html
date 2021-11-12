@@ -13,8 +13,9 @@
     <div class="row justify-content-md-center">
         <div class="col-8">
             <div class="card signup-card">
-                <div class="card-header">
-                    Signup - Seller
+                <div class="card-header d-flex">
+                    <a href="{% url 'home' %}" class="me-5"><i class="fas fa-home"></i></a>
+                    <h5 class="text-info mx-5">Signup-Seller</h5>
                 </div>
                 <div class="card-body">
                     {% include 'components/messages.html' %}

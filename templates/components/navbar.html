@@ -1,25 +1,27 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'home' %}">Online Auction</a>
+        <a class="navbar-brand" href="{% url 'home' %}"> <i class="fas fa-gavel"></i>  Online Auction</a>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+          <a class="nav-link active ms-5" aria-current="page" href="{% url 'home' %}"><i class="fas fa-home"></i></a>
         </li>
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Registration
+          <a class="nav-link dropdown-toggle active ms-5" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-portrait"></i>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="{% url 'signin' %}">Login</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{% url 'signupseller' %}">Seller Signup</a></li>
             <li><a class="dropdown-item" href="{% url 'signupbuyer' %}">Buyer Signup</a></li>
+            <li><a class="dropdown-item" href="{% url 'signupseller' %}">Seller Signup</a></li>
           </ul>
         </li>
       </ul>

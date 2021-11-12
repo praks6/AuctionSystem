@@ -13,4 +13,8 @@ urlpatterns = [
     path('history/', views.history, name='history'),
     path('sellerhistory/', views.sellerhistory, name='sellerhistory'),
     path('delete/<int:id>/', views.delete, name='delete'),
+    path('category/', views.get_product_by_category, name='category'),
+    path('comment/<int:id>', views.comment, name='comment'),
+    path('editcomment/<int:id>',views.editcomment, name='editcomment'),
+    path('deletecomment/<int:id>', views.deletecomment, name='deletecomment'),
 ]

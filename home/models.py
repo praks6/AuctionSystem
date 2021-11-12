@@ -5,12 +5,15 @@ from django.db import models
 
 # Create your models here.
 from accounts.models import User
-
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.name
 
 class Product(models.Model):
     product_name = models.CharField(max_length=100)
     image = models.ImageField(upload_to="media/productimage/")
-    category = models.CharField(max_length=100)
+    category = models.ForeignKey(Category, on_delete=models.SET_DEFAULT, default="unknown category")
     description = models.TextField()
     minimum_price = models.FloatField()
     start_date = models.DateTimeField()
@@ -47,3 +50,9 @@ class Winner(models.Model):
 
     def __unicode__(self):
         return self.user_name
+
+class Comment(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    comment = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
