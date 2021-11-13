@@ -7,22 +7,22 @@
 
 <div class="row">
     {% include 'components/buyersidenav.html' %}
-    <div class="col-10 right-side">
+    <div class="col-3 right-side">
         <div class="card form-card">
             {% include 'components/messages.html' %}
             <div class="card-body">
-                <h3>Payment </h3>
+                <h3>Payment Method</h3>
                 <form action="" method="POST" enctype="multipart/form-data" >
                     {% csrf_token %}
-                    <select name = "payment_method" >
+                    <select name = "payment_method"  class="btn btn-success class my-3">
                         <option value="net_banking">Net Banking</option>
                         <option value="debit_card">Debit</option>
                         <option value="credit_card">Credit</option>
                     </select>
-                    <span>Bid amount</span><input type="text" value="{{bid_amount}}" readonly >
-                    <span>product id </span><input type="text" value="{{product_id}}" readonly>
-                    <span>user id </span><input type="text" value="{{user}}" readonly>
-                    <button style="float:right;" type="submit" class="btn btn-success">Pay</button>
+                    <p>Your Bid amount<input type="text" value="{{bid_amount}}" readonly ></p>
+                    <p>product id <input type="text" value="{{product_id}}" readonly></p>
+                    <p>user Name<input type="text" value="{{user}}" readonly></p>
+                    <button style="float:left;" type="submit" class="btn btn-success class ms-5">Pay</button>
                 </form>
             </div>
         </div>

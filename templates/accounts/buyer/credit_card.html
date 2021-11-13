@@ -11,18 +11,11 @@
         <div class="card form-card">
             {% include 'components/messages.html' %}
             <div class="card-body">
-                <h3 class="btn btn-success px-5">Bank Details</h3>
+                <h3 class="btn btn-success btn-lg">Credit Card Details</h3>
                 <form action="{% url 'paid' %}" method="POST" enctype="multipart/form-data" >
                     {% csrf_token %}
-                    <select name = "" class="btn btn-outline-primary btn-sm px-4" >
-                        <option >Nepal Restra Bank</option>
-                        <option >Banijya Bank</option>
-                        <option >mega Bank</option>
-                        <option >Global Bank</option>
-                        <option >NIC Asia Bank</option>
-                        <option >NMB Bank</option>
-                    </select>
-                    <input type="text" value="" placeholder="Enter your bank account" class=" mb-3 mt-2">
+                    <input type="text" value="" placeholder="Enter credit card number" class="mt-2">
+                    <input type="text" value="" placeholder="Ex.date - yyyy/mm/dd" class="mb-3 mt-1">
                     <p>Bid amount<input type="text" name="bid_amount" value="{{bid_amount}}" readonly ></p>
                     <p>product id <input type="text" name="product_id" value="{{product_id}}" readonly></p>
                     <p>user Name <input type="text" name="user" value="{{user}}" readonly></p>

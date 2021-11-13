@@ -5,7 +5,7 @@ from django.db.models import Count, Max, Q
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect,get_object_or_404
 from .form import BidForm, createProduct,CommentForm
-from .models import Product, Bidders, Winner,Comment
+from .models import Product, Bidders, Winner,Comment,Category
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -30,12 +30,13 @@ def search(request):
 
 @login_required(login_url = 'signin')
 def Dashboard(request):
+    category = Category.objects.all()
     product = Product.objects.all().order_by('-start_date')
     paginator = Paginator(product, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    context = {'product': page_obj}
+    context = {'product': page_obj,'category':category}
 
     return render(request, 'home/dashboard.html', context)
 
@@ -140,8 +141,8 @@ def afterPaid(request):
             return render(request, 'home/bidded.html', context)
 
 
-    messages.add_message(request, messages.SUCCESS, "Error")
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    messages.add_message(request, messages.ERROR, "Error-you bidded already")
+    return render(request, 'home/bidded.html', context)
 
 
 ############################################################################
@@ -196,6 +197,10 @@ def payment(request):
         # print(a)
         if a == 'net_banking':
             return render(request, 'accounts/buyer/net_banking.html', context_dict)
+        elif a == 'debit_card':
+            return render(request, 'accounts/buyer/debit_card.html', context_dict)
+        elif a == 'credit_card':
+            return render(request, 'accounts/buyer/credit_card.html', context_dict)
 
     return render(request, 'accounts/buyer/payment.html', context_dict)
 
@@ -236,12 +241,24 @@ def delete(request, id):
 ##################################
 @login_required(login_url = 'signin')
 def get_product_by_category(request):
-    category = request.GET.get("category" or None)
-    if category == "":
+    cat = request.GET.get("category" or None)
+    category = Category.objects.all()
+
+    if cat == "":
         product = Product.objects.all().order_by('-start_date')
-        return render(request, 'home/dashboard.html', {'product': product})
-    product = Product.objects.filter(category=category)
-    return render(request, 'home/dashboard.html', {'product': product})
+        paginator = Paginator(product, 4)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context = {'product': page_obj, 'category': category}
+
+        return render(request, 'home/dashboard.html', context)
+
+    product = Product.objects.filter(category_id=cat)
+    paginator = Paginator(product, 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {'product': page_obj, 'category': category}
+    return render(request, 'home/dashboard.html', context)
 
 #################################
 @login_required(login_url = 'signin')
