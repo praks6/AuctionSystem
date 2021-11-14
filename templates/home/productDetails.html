@@ -34,26 +34,39 @@
 
                     {% if product.is_expired %}
                         <p class="btn btn-danger">Session Expired</p>
-                        <p>Winner: {{winner.user}}</p>
-                        <p>Sold Price : {{bidded_max_price}}</p>
+                        {% if winner %}
+                            <p>Winner: {{winner.user}}</p>
+                            <p>Sold Price : {{bidded_max_price}}</p>
+                        {% else %}
+                            <p>Not Sold </p>
+                        {% endif%}
 
                     {% else %}
-
-                        <p>current maximum bid price : {{bidded_max_price}}</p>
-                        <p>Total number of bidder : {{no_bidder}}</p>
-                        <p>{{product.remaining_time}}</p>
-
+                        {% if no_bidder %}
+                            <p>current maximum bid price : {{bidded_max_price}}</p>
+                            <p>Total number of bidder : {{no_bidder}}</p>
+                        {% endif%}
+                        <p>Start Date: {{product.start_date}}</p>
+                        <p>End Date: {{product.expire_date}}</p>
+                        <p>Remaining Time: {{product.remaining_time}}</p>
                     {% endif %}
 
 
                     {% if request.user.isBuyer and not product.is_expired %}
+                          {% now "Y-m-d" as todays_date %}
+                            {% if todays_date < product.start_date|date:"Y-m-d" %}
+                                <h5> Wait To Start Bid!</h5>
+                            {% else %}
+                                <form class="d-flex" action="{% url 'bid' product.id%}" method="POST" enctype="multipart/form-data" >
+                                    {% csrf_token %}
+                                    {{form.as_p}}
+                                    <button type="submit" class="btn btn-outline-primary mx-4 mb-3"><i class="fa fa-gavel" aria-hidden="true"></i></button>
+                                </form>
 
-                        <form class="d-flex" action="{% url 'bid' product.id%}" method="POST" enctype="multipart/form-data" >
-                            {% csrf_token %}
-                            {{form.as_p}}
-                            <button type="submit" class="btn btn-outline-primary mx-4 mb-3"><i class="fa fa-gavel" aria-hidden="true"></i></button>
-                        </form>
+                            {% endif %}
                     {% endif %}
+
+
 
                 </div>
             </div>

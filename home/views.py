@@ -22,7 +22,10 @@ def search(request):
     search = request.GET.get('search')
     product = Product.objects.filter(Q(product_name__icontains=search) | Q(description__icontains=search)).order_by(
         '-start_date')
-    context = {'product': product}
+    paginator = Paginator(product, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {'product': page_obj}
     return render(request, "home/dashboard.html", context)
 
 
@@ -32,7 +35,7 @@ def search(request):
 def Dashboard(request):
     category = Category.objects.all()
     product = Product.objects.all().order_by('-start_date')
-    paginator = Paginator(product, 4)
+    paginator = Paginator(product, 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -229,7 +232,7 @@ def delete(request, id):
         messages.add_message(request, messages.SUCCESS, "deleted successfully")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-    if request.user.isSeller and not product.is_expired:
+    if request.user.isSeller or request.user.is_admin: #and not product.is_expired:
         product.delete()
 
         messages.add_message(request, messages.SUCCESS, "deleted successfully")
@@ -246,7 +249,7 @@ def get_product_by_category(request):
 
     if cat == "":
         product = Product.objects.all().order_by('-start_date')
-        paginator = Paginator(product, 4)
+        paginator = Paginator(product, 3)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context = {'product': page_obj, 'category': category}
@@ -254,7 +257,7 @@ def get_product_by_category(request):
         return render(request, 'home/dashboard.html', context)
 
     product = Product.objects.filter(category_id=cat)
-    paginator = Paginator(product, 4)
+    paginator = Paginator(product, 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {'product': page_obj, 'category': category}

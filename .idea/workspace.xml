@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="472c2d17-25c8-41c9-8007-a75f48860409" name="Changes" comment="completed">
-      <change afterPath="$PROJECT_DIR$/templates/accounts/buyer/credit_card.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/accounts/buyer/debit_card.html" afterDir="false" />
+    <list default="true" id="472c2d17-25c8-41c9-8007-a75f48860409" name="Changes" comment="Done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/home/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/home/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accounts/buyer/net_banking.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accounts/buyer/net_banking.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accounts/buyer/payment.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accounts/buyer/payment.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accounts/buyer/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accounts/buyer/signup.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/components/messages.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/components/messages.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home/bidded.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/bidded.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/media/productimage/john-schnobrich-2FPjlAyMQTA-unsplash.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/accounts/buyer/history.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accounts/buyer/history.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/accounts/seller/history.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accounts/seller/history.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home/productDetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/productDetails.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +128,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636741395313</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Done">
+      <created>1636786364217</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1636786364217</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -156,6 +159,7 @@
     <MESSAGE value="payment method is added" />
     <MESSAGE value="update" />
     <MESSAGE value="completed" />
-    <option name="LAST_COMMIT_MESSAGE" value="completed" />
+    <MESSAGE value="Done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Done" />
   </component>
 </project>

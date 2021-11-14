@@ -29,9 +29,10 @@
                       <td>{{h.minimum_price}}</td>
                       <td>
                           <a href="{% url 'productDetails' h.id %}" class="text-primary mx-2"><i class="fas fa-eye"></i></a>
-                          {% if not h.is_expired %}
-                            <a href="{% url 'delete' h.id %}" class="text-danger"> <i  class="fas fa-trash ms-2"></i></a>
-                          {% endif%}
+                          <a href="{% url 'delete' h.id %}" class="text-danger"> <i  class="fas fa-trash ms-2"></i></a>
+<!--                          {% if h.is_expired %}-->
+
+<!--                          {% endif%}-->
                       </td>
                     </tr>
                   {% endfor%}
