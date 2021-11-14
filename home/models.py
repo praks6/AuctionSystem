@@ -23,6 +23,7 @@ class Product(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     is_expired = models.BooleanField(blank=True, null= True)
 
+
     def __str__(self):
         return self.product_name
 
@@ -30,6 +31,9 @@ class Product(models.Model):
         self.expire_date = self.start_date + timedelta(days=self.duration)
         super(Product, self).save(*args, **kwargs)
 
+    def delete(self, using=None, keep_parents=False):
+        self.image.storage.delete(self.image.name)
+        super().delete()
 
     @property
     def remaining_time(self):

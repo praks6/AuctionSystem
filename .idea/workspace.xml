@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="472c2d17-25c8-41c9-8007-a75f48860409" name="Changes" comment="Done">
+    <list default="true" id="472c2d17-25c8-41c9-8007-a75f48860409" name="Changes" comment="Final">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/home/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/home/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/media/productimage/john-schnobrich-2FPjlAyMQTA-unsplash.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accounts/buyer/history.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accounts/buyer/history.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/accounts/seller/history.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/accounts/seller/history.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home/productDetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/productDetails.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/home/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/home/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +131,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636786364217</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Final">
+      <created>1636905498274</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1636905498274</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -160,6 +163,7 @@
     <MESSAGE value="update" />
     <MESSAGE value="completed" />
     <MESSAGE value="Done" />
-    <option name="LAST_COMMIT_MESSAGE" value="Done" />
+    <MESSAGE value="Final" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final" />
   </component>
 </project>
